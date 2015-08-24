@@ -30,9 +30,9 @@ def tokenizeAndPrintScore(w):
 	words = w.split()
 	oneTweetScore = 0
 	for word in words:
-		if word in scores:
+		try:
 			oneTweetScore = oneTweetScore + scores[word]
-		else:
+		except:
 			pass
 	print "TWEET = " + w + "\t SCORE = " + str(oneTweetScore)
 
