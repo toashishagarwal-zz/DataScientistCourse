@@ -1,20 +1,18 @@
 import sys
 import json
 
-def hw():
-    print 'Hello, world!'
+scores = {}
 
 def lines(fp):
     print str(len(fp.readlines()))
 
 def printSentimentFileScore(fp):
 	afinnfile = open(fp);
-	scores = {}
+	global scores 
+	score = {}
 	for line in afinnfile:
 		term, score = line.split("\t")
 		scores[term] = int(score)
-
-	print scores.items()
 
 def printTweets(fp):
 	tweets = []
@@ -24,21 +22,25 @@ def printTweets(fp):
 
 	for tweet in tweets:
 		try:
-			print tweet['text']
+			tokenizeAndPrintScore(tweet['text'])
 		except:
 			pass
 
-def tokenize(w):
-	print ""
+def tokenizeAndPrintScore(w):
+	words = w.split()
+	oneTweetScore = 0
+	for word in words:
+		try:
+			oneTweetScore = oneTweetScore + scores[word]
+		except:
+			pass
+	print "TWEET = " + w + "\t SCORE = " + str(oneTweetScore)
 
 def main():
-    sent_file = open(sys.argv[1])
-    tweet_file = open(sys.argv[2])
-    hw()
-    lines(sent_file)
-    lines(tweet_file)
-    # printSentimentFileScore(sys.argv[1])
-    printTweets(sys.argv[2]);
+	sent_file = open(sys.argv[1])
+	tweet_file = open(sys.argv[2])
+	printSentimentFileScore(sys.argv[1])
+	printTweets(sys.argv[2])
 
 if __name__ == '__main__':
     main()
